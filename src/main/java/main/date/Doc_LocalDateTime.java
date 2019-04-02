@@ -26,10 +26,21 @@ public class Doc_LocalDateTime {
 
         LocalDateTime currentLocalDateTimeByUTC = getLocalDateTime();
         /*printLocalDateTime(currentLocalDateTimeByUTC);*/
-        printByFormat(currentLocalDateTimeByUTC);
+        /*printByFormat(currentLocalDateTimeByUTC);*/
+
+        // [서버기준] Timestamp -> LocalDateTime
+        LocalDateTime localDateTimeByTimeStamp = parseTimestampToLocalDateTime(new Timestamp(1553540400000L)); // [GMT] 1553540400000L - 2019년 March 25일 Monday PM 7:00:00
+        System.out.println("[localDateTimeByTimeStamp] " + localDateTimeByTimeStamp); // [UTC] 2019-03-26T04:00
+
+        // [서버기준] LocalDateTime -> Timestamp
+        Timestamp timestampByLocalDateTime = parseLocalDateTimeToTimestamp(localDateTimeByTimeStamp); // [UTC] 2019-03-26T04:00
+        System.out.println("[timestampByLocalDateTime by long] " + timestampByLocalDateTime.getTime()); // [GMT] 1553540400000L - 2019년 March 25일 Monday PM 7:00:00
+        System.out.println("[timestampByLocalDateTime by Timestamp] " + timestampByLocalDateTime); // [UTC] 2019-03-26 04:00:00.0
 
         ZonedDateTime utcDateTime = getTimeZone("UTC");
         ZonedDateTime seoulDateTime = getTimeZone("Asia/Seoul");
+
+
     }
 
     // ================================== GET ==================================
@@ -52,37 +63,6 @@ public class Doc_LocalDateTime {
     // [서버기준] LocalDateTime by Detail
     public static LocalDateTime getLocalDateTimeByDetail(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond) {
         return LocalDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond);
-    }
-
-    public static void printLocalDate(LocalDate localDate) {
-        System.out.println("[getYear()] " + localDate.getYear()); // int
-        System.out.println("[getMonth()] " + localDate.getMonth()); // string (name)
-        System.out.println("[getMonthValue()] " + localDate.getMonthValue()); // int (n / 12)
-        System.out.println("[getDayOfYear()] " + localDate.getDayOfYear()); // int (n / 365)
-        System.out.println("[getDayOfMonth()] " + localDate.getDayOfMonth()); // int (n / 30)
-        System.out.println("[getDayOfWeek()] " + localDate.getDayOfWeek()); // string (name)
-        System.out.println("[isLeapYear()] " + localDate.isLeapYear()); // boolean (true / false)
-    }
-
-    public static void printLocalTime(LocalTime localTime) {
-        System.out.println("[localTime.getHour()] " + localTime.getHour());
-        System.out.println("[localTime.getMinute()] " + localTime.getMinute());
-        System.out.println("[localTime.getSecond()] " + localTime.getSecond());
-        System.out.println("[localTime.getNano()] " + localTime.getNano());
-    }
-
-    public static void printLocalDateTime(LocalDateTime localDateTime) {
-        System.out.println("[getYear()] " + localDateTime.getYear()); // int
-        System.out.println("[getMonth()] " + localDateTime.getMonth()); // string (name)
-        System.out.println("[getMonthValue()] " + localDateTime.getMonthValue()); // int (n / 12)
-        System.out.println("[getDayOfYear()] " + localDateTime.getDayOfYear()); // int (n / 365)
-        System.out.println("[getDayOfMonth()] " + localDateTime.getDayOfMonth()); // int (n / 30)
-        System.out.println("[getDayOfWeek()] " + localDateTime.getDayOfWeek()); // string (name)
-        /*System.out.println("[isLeapYear()] " + localDateTime.isLeapYear()); // boolean (true / false)*/
-        System.out.println("[localTime.getHour()] " + localDateTime.getHour());
-        System.out.println("[localTime.getMinute()] " + localDateTime.getMinute());
-        System.out.println("[localTime.getSecond()] " + localDateTime.getSecond());
-        System.out.println("[localTime.getNano()] " + localDateTime.getNano());
     }
 
     public static ZonedDateTime getTimeZone(String timezone) {
@@ -143,9 +123,14 @@ public class Doc_LocalDateTime {
         /*return LocalDateTime.parse("2010-11-25 12:30:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));*/
     }
 
-    // java.sql.Timestamp -> LocalDateTime
+    // [서버기준] java.sql.Timestamp -> LocalDateTime
     public static LocalDateTime parseTimestampToLocalDateTime(Timestamp timestamp) {
         return timestamp.toLocalDateTime();
+    }
+
+    // [서버기준] java.sql.Timestamp -> LocalDateTime
+    public static Timestamp parseLocalDateTimeToTimestamp(LocalDateTime localDateTime) {
+        return Timestamp.valueOf(localDateTime);
     }
 
     // LocalDateTime -> LocalDate
@@ -156,6 +141,39 @@ public class Doc_LocalDateTime {
     // LocalDate -> LocalDateTime
     public static LocalDateTime parseLocalDateToLocalDateTime(LocalDate localDate, int hour, int minute, int second, int nanoOfSecond) {
         return localDate.atTime(hour, minute, second, nanoOfSecond);
+    }
+
+    // ================================== PRINT ==================================
+
+    public static void printLocalDate(LocalDate localDate) {
+        System.out.println("[getYear()] " + localDate.getYear()); // int
+        System.out.println("[getMonth()] " + localDate.getMonth()); // string (name)
+        System.out.println("[getMonthValue()] " + localDate.getMonthValue()); // int (n / 12)
+        System.out.println("[getDayOfYear()] " + localDate.getDayOfYear()); // int (n / 365)
+        System.out.println("[getDayOfMonth()] " + localDate.getDayOfMonth()); // int (n / 30)
+        System.out.println("[getDayOfWeek()] " + localDate.getDayOfWeek()); // string (name)
+        System.out.println("[isLeapYear()] " + localDate.isLeapYear()); // boolean (true / false)
+    }
+
+    public static void printLocalTime(LocalTime localTime) {
+        System.out.println("[localTime.getHour()] " + localTime.getHour());
+        System.out.println("[localTime.getMinute()] " + localTime.getMinute());
+        System.out.println("[localTime.getSecond()] " + localTime.getSecond());
+        System.out.println("[localTime.getNano()] " + localTime.getNano());
+    }
+
+    public static void printLocalDateTime(LocalDateTime localDateTime) {
+        System.out.println("[getYear()] " + localDateTime.getYear()); // int
+        System.out.println("[getMonth()] " + localDateTime.getMonth()); // string (name)
+        System.out.println("[getMonthValue()] " + localDateTime.getMonthValue()); // int (n / 12)
+        System.out.println("[getDayOfYear()] " + localDateTime.getDayOfYear()); // int (n / 365)
+        System.out.println("[getDayOfMonth()] " + localDateTime.getDayOfMonth()); // int (n / 30)
+        System.out.println("[getDayOfWeek()] " + localDateTime.getDayOfWeek()); // string (name)
+        /*System.out.println("[isLeapYear()] " + localDateTime.isLeapYear()); // boolean (true / false)*/
+        System.out.println("[localTime.getHour()] " + localDateTime.getHour());
+        System.out.println("[localTime.getMinute()] " + localDateTime.getMinute());
+        System.out.println("[localTime.getSecond()] " + localDateTime.getSecond());
+        System.out.println("[localTime.getNano()] " + localDateTime.getNano());
     }
 
 }
