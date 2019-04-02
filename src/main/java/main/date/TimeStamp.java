@@ -1,6 +1,5 @@
 package main.date;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,6 +10,12 @@ import java.util.TimeZone;
 
 public class TimeStamp {
 
+    /**
+     * `TimeStamp`에는 2가지 설정이 있습니다.
+     * - `Second` 기준
+     * - `MileSecond` 기준
+     *
+     * */
     static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static void main(String[] args) throws Exception {
@@ -18,19 +23,19 @@ public class TimeStamp {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = dateFormat.parse("2019-03-26 04:00:00"); // (서버기준-UTC+9)
 
-        // A (long)
+        // [서버시간기준] Date -> long(mileSecond)
         long timestampA = convertTimestampByGetTime(date);
         System.out.println(timestampA);
 
-        // B (TimeStamp)
+        // [서버시간기준] Date -> TimeStamp
         Timestamp timestamp = convertTimestampByTimeStamp(date);
         System.out.println(timestamp.getTime());
 
-        // [서버시간] C (ts -> date)
+        // [서버시간기준] TimeStamp -> Date(String)
         String strDate = convertDateTimeByTimestamp(timestamp);
         System.out.println(strDate);
 
-        // [GMT] D (ts-> date)
+        // [GMT] TimeStamp -> Date(String)
         String strDateGMT = convertDateTimeByTimestampGMT(timestamp);
         System.out.println(strDateGMT);
 
@@ -38,22 +43,22 @@ public class TimeStamp {
         printInstant();
     }
 
-    // [서버시간기준] date -> ts(long)
+    // [서버시간기준] Date -> long(mileSecond)
     public static long convertTimestampByGetTime(Date date) throws ParseException {
         return date.getTime();
     }
 
-    // [서버시간기준] date -> ts
+    // [서버시간기준] Date -> TimeStamp
     public static Timestamp convertTimestampByTimeStamp(Date date) throws ParseException {
         return new Timestamp(convertTimestampByGetTime(date));
     }
 
-    // [서버시간기준] ts -> date(string)
+    // [서버시간기준] TimeStamp -> Date(String)
     public static String convertDateTimeByTimestamp(Timestamp ts) {
         return formatter.format(ts);
     }
 
-    // [GMT 기준] ts -> date(string)
+    // [GMT] TimeStamp -> Date(String)
     public static String convertDateTimeByTimestampGMT(Timestamp ts){
         SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
         dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
