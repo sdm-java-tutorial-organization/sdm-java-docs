@@ -62,6 +62,7 @@ import java.util.*;
  */
 
 public class Doc_Map {
+
     public static void main(String[] args) {
 
         // #01. HashMap
@@ -105,5 +106,23 @@ public class Doc_Map {
         // Map 반복문 (Loop)
         // entry.forEach((k, v)=-{ /*...*/});
 
+        Map<String, String> myMap = new HashMap<String, String>();
+        myMap.put("a1", "a2");
+        myMap.put("b1", "b2");
+        myMap.put("c1", "c2");
+        printMap(myMap);
+    }
+
+    /* Map 반복문 */
+    public static void printMap(Map<String, String> myMap) {
+        /*Iterator<Map.Entry<String, String>> iterator = myMap.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry<String, String> element = iterator.next();
+            System.out.println(String.format("key:%s, value:%s", element.getKey(), element.getValue()));
+        }*/
+
+        myMap.forEach((key, value) -> {
+            System.out.println(String.format("key:%s, value:%s", key, value));
+        });
     }
 }

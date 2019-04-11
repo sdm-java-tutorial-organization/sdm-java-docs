@@ -1,58 +1,51 @@
 package main.string;
 
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Doc_Regex {
+
+    /**
+     *
+     * 정규식이해하기
+     *  - 주의점
+     *      - 역슬래시는 `\\\\` 로 표현됩니다. (정규식에선 역슬래시를 표현하기 위해서 `\\`가 사용됩니다)
+     *
+     * #기호
+     *      - [abc] :: a,b,c 중 1개의 문자
+     *      - [^abc] :: a,b,c 이외의 1개의 문자
+     *      - [a-zA-Z] :: a~z, A~Z 중 하나의 문자
+     *      - \d :: 한 개의 숫자, == [0-9]
+     *      - \s :: 공백
+     *      - \w :: 한 개의 알파벳 또는 한 개의 숫자, == [a-zA-Z_0-9]
+     *      - ? :: 없은 또는 한개
+     *      - * :: 없음 또는 한 개 이상
+     *      - + :: 한 개 이상
+     *      - {n} :: 정확히 n개
+     *      - {n,} :: 최소 n개
+     *      - {n,m} :: n개 ~ m개까지
+     *      - () :: 그룹핑
+     *
+     * #TEL `(02|010)-\d{3,4}-\d{4}`
+     *      - (02|010) :: 02 또는 010
+     *      - - :: - 포함
+     *      - \d{3,4} :: 3자리 또는 4자리
+     *      - - :: - 포함
+     *      - \d{4} :: 4자리
+     *
+     * #EMAIL `\w+@\w+\.\w(\.\w+)?`
+     *      - \w+ :: 한개 이상의 알파벳 또는 숫자
+     *      - @ :: @
+     *      - \w+ :: 한개 이상의 알파벳 또는 숫자
+     *      - \. :: .
+     *      - \w+ :: 한개 이상의 알파벳 또는 숫자
+     *      - (\.\w+)? :: \.\w+이 없거나, 한번더 올 수 있음
+     *      => (\.)은 문자로서의 (.)을 말하고 (.)은 모든 문자 중에서 한 개의 문자를 뜻합니다.
+     *
+     * */
+
     public static void main(String[] args) {
-
-        /**
-         * [정규표현식(Regular Expression) 이해하기]
-         *
-         * java.util.regex.Pattern
-         *
-         * #기본기호설명
-         * - [abc] :: a,b,c 중 1개의 문자
-         * - [^abc] :: a,b,c 이외의 1개의 문자
-         * - [a-zA-Z] :: a~z, A~Z 중 하나의 문자
-         * - \d :: 한 개의 숫자, == [0-9]
-         * - \s :: 공백
-         * - \w :: 한 개의 알파벳 또는 한 개의 숫자, == [a-zA-Z_0-9]
-         * - ? :: 없은 또는 한개
-         * - * :: 없음 또는 한 개 이상
-         * - + :: 한 개 이상
-         * - {n} :: 정확히 n개
-         * - {n,} :: 최소 n개
-         * - {n,m} :: n개 ~ m개까지
-         * - () :: 그룹핑
-         *
-         * #전화번호예제
-         * (02|010)-\d{3,4}-\d{4}
-         *
-         * (02|010) :: 02 또는 010
-         * - :: - 포함
-         * \d{3,4} :: 3자리 또는 4자리
-         * - :: - 포함
-         * \d{4} :: 4자리
-         *
-         * #이메일예제
-         * \w+@\w+\.\w(\.\w+)?
-         *
-         * \w+ :: 한개 이상의 알파벳 또는 숫자
-         * @ :: @
-         * \w+ :: 한개 이상의 알파벳 또는 숫자
-         * \. :: .
-         * \w+ :: 한개 이상의 알파벳 또는 숫자
-         * (\.\w+)? :: \.\w+이 없거나, 한번더 올 수 있음
-         * => (\.)은 문자로서의 (.)을 말하고 (.)은 모든 문자 중에서 한 개의 문자를 뜻합니다.
-         *
-         * */
-
-        /**
-         * [Pattern클래스]
-         *
-         * - matches()
-         *
-         * */
 
         // Pattern 클래스를 사용해볼까.
         boolean result = Pattern.matches("정규식", "문자열");
@@ -143,6 +136,25 @@ public class Doc_Regex {
         System.out.println("<hello src=\"hh\" src = \"ss\"/>".matches(regExpOpenAndCloseTag));
         System.out.println("<hello src=\"h h.srchttP://\" ss = \" ss \"  />".matches(regExpOpenAndCloseTag));
 
-
+        // == `[^]` 숫자를 제외하고 변환 ==
+        String replaceAllExceptNum = replaceAllExceptNum("a1b2c3");
+        System.out.println("[replaceAllExceptNum] a1b2c3 -> " + replaceAllExceptNum);
     }
+
+    // `[^]` 숫자를 제외하고 변환
+    public static String replaceAllExceptNum(String target) {
+        return target.replaceAll("[^0-9]", "@");
+    }
+
+    /**
+     * $1
+     *
+     * 괄호의 2가지 의미
+     * (?:) <- non-capturing group
+     * () <- captureing group : 매치되는 결과물을 나중에 사용할 수 있도록 저장
+     * */
+    public static String dollar(String target) {
+        return target.replaceAll("\\+0([0-9]){1}\\:00", "+0$100");
+    }
+
 }

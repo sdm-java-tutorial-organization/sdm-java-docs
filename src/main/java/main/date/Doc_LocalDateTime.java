@@ -30,16 +30,15 @@ public class Doc_LocalDateTime {
 
         // [서버기준] Timestamp -> LocalDateTime
         LocalDateTime localDateTimeByTimeStamp = parseTimestampToLocalDateTime(new Timestamp(1553540400000L)); // [GMT] 1553540400000L - 2019년 March 25일 Monday PM 7:00:00
-        System.out.println("[localDateTimeByTimeStamp] " + localDateTimeByTimeStamp); // [UTC] 2019-03-26T04:00
+        /*System.out.println("[localDateTimeByTimeStamp] " + localDateTimeByTimeStamp); // [UTC] 2019-03-26T04:00*/
 
         // [서버기준] LocalDateTime -> Timestamp
         Timestamp timestampByLocalDateTime = parseLocalDateTimeToTimestamp(localDateTimeByTimeStamp); // [UTC] 2019-03-26T04:00
-        System.out.println("[timestampByLocalDateTime by long] " + timestampByLocalDateTime.getTime()); // [GMT] 1553540400000L - 2019년 March 25일 Monday PM 7:00:00
-        System.out.println("[timestampByLocalDateTime by Timestamp] " + timestampByLocalDateTime); // [UTC] 2019-03-26 04:00:00.0
+        /*System.out.println("[timestampByLocalDateTime by long] " + timestampByLocalDateTime.getTime()); // [GMT] 1553540400000L - 2019년 March 25일 Monday PM 7:00:00*/
+        /*System.out.println("[timestampByLocalDateTime by Timestamp] " + timestampByLocalDateTime); // [UTC] 2019-03-26 04:00:00.0*/
 
         ZonedDateTime utcDateTime = getTimeZone("UTC");
         ZonedDateTime seoulDateTime = getTimeZone("Asia/Seoul");
-
 
     }
 

@@ -5,34 +5,33 @@ import java.nio.charset.Charset;
 
 /**
  * #String 클래스
- * String 생성자는 매개타입에 따라 다양하게 존재
- * <p>
+ *  String 생성자는 매개타입에 따라 다양하게 존재
+ *
  * #API
- * - charAt(int index) => char :: 특정 위치의 문자 리턴
- * - equals(Object obj) => boolean :: 두 문자열(문자열만) 비교, (자바는 문자열 리터럴이 동일하다면 동일한 String 객체를 참조하도록 되어 있습니다.)
- * - getBytes() => byte[] :: byte[]로 리턴
- * - getBytes(Charset charset) :: 특정 문자셋으로 인코딩된 바이트 배열을 얻으려면
- * - indexOf(String str) => int :: 문자열 내에서 주어진 문자열의 위치를 리턴
- * - length() => int :: 길이 리턴
- * - replace(CharSequeence target, CharSequence replacement) => String :: target부분을 replacement로 대치한 새로운 문자열 리턴
- * - substring(int beginIndex) => String :: beginIndex 위치에서 끝까지 잘라낸 새로운 문자열을 리턴
- * - substring(int beginIndex, int endIndex) => String
- * - toLowerCase() => String
- * - toUpperCase() => String
- * - trim() => String
- * - valueOf(primitive type) => String :: 기본 타입값 (primitive type)을 문자열로 리턴
+ *  - charAt(int index) => char :: 특정 위치의 문자 리턴
+ *  - equals(Object obj) => boolean :: 두 문자열(문자열만) 비교, (자바는 문자열 리터럴이 동일하다면 동일한 String 객체를 참조하도록 되어 있습니다.)
+ *  - getBytes() => byte[] :: byte[]로 리턴
+ *  - getBytes(Charset charset) :: 특정 문자셋으로 인코딩된 바이트 배열을 얻으려면
+ *  - indexOf(String str) => int :: 문자열 내에서 주어진 문자열의 위치를 리턴
+ *  - length() => int :: 길이 리턴
+ *  - replace(CharSequeence target, CharSequence replacement) => String :: target부분을 replacement로 대치한 새로운 문자열 리턴
+ *  - substring(int beginIndex) => String :: beginIndex 위치에서 끝까지 잘라낸 새로운 문자열을 리턴
+ *  - substring(int beginIndex, int endIndex) => String
+ *  - toLowerCase() => String
+ *  - toUpperCase() => String
+ *  - trim() => String
+ *  - valueOf(primitive type) => String :: 기본 타입값 (primitive type)을 문자열로 리턴
  */
 
 class Doc_String {
 
+    static Charset cs = Charset.defaultCharset();
+
     public static void main(String[] args) {
 
         // #String 생성자
-
-
         String str = "abcdefg";
         byte[] bytes = str.getBytes();
-        Charset cs = Charset.defaultCharset();
 
         // 바이트 배열 전체를 String으로 생성
         String strA = new String(bytes);
@@ -113,6 +112,20 @@ class Doc_String {
         String sampleB = "AAA&BBB,CCC,DDD-EEE";
         String[] arrStrB = str.split("&|,|-"); // & 거나 , 거나 - 로 잘르세여.
 
-
+        // == replace ==
+        String myString = "abc";
+        String newMyString = replace(myString);
+        System.out.println(myString + " " + newMyString);
     }
+
+    // == replace - 새로운객체로반환 ==
+    public static String replace(String target) {
+        return target.replace("a", "b");
+    }
+
+    // == replaceAll - 정규식을활용 ==
+    public static String replaceAll(String target) {
+        return target.replaceAll(null/*regex*/, null/*replacement*/);
+    }
+
 }

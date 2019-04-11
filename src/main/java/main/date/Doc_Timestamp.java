@@ -23,7 +23,7 @@ public class Doc_Timestamp {
 
     public static void main(String[] args) throws Exception {
 
-        final Date SAMPLE_UTC_DATE = formatter.parse("2019-03-26 04:00:00"); // (서버기준-UTC+9)
+        final Date SAMPLE_UTC_DATE = formatter.parse("2019-03-26 04:00:00"); // (KST - 서버기준-UTC+9)
 
         // [서버시간기준] Date -> long(MilliSecond)
         long numOfTimestamp = convertDateToLong(SAMPLE_UTC_DATE);
@@ -42,18 +42,22 @@ public class Doc_Timestamp {
         Timestamp timeStampBySecond = new Timestamp(timestamp.getTime() / 1000);
         /*System.out.println("[timeStampBySecond] " + timeStampBySecond.getTime());*/
         String strDateBySecond = convertTimestampToDate(timeStampBySecond);
-        System.out.println("[Timestamp(Second) -> Date(String)] " + strDateBySecond); // [KST] 1970-01-19 08:32:20
+        System.out.println("[Timestamp(Second) -> String(Date)] " + strDateBySecond); // [KST] 1970-01-19 08:32:20
 
-        // [GMT] Date(UTC) -> Date(GMT:String)
-        String strDateFromDateByGMT = convertDateToDateGMT(SAMPLE_UTC_DATE);
-        System.out.println("[GMT][Date -> Date(String)] " + strDateFromDateByGMT); // [GMT] 2019-3월-25 19:00:00
+        // [GMT] Date(UTC) -> String(Date)
+        String strDateFromDateByGMT = convertDateToStringGMT(SAMPLE_UTC_DATE/* KST 2019-03-26 04:00:00 */);
+        System.out.println("[GMT][Date -> String(Date)] " + strDateFromDateByGMT); // [GMT] 2019-3월-25 19:00:00
 
         // [GMT] Timestamp(GMT) -> Date(GMT:String)
-        String strDateFromTimestampByGMT = convertTimeStampToDateGMT(timestamp);
-        System.out.println("[GMT][Timestamp -> Date(String)] " + strDateFromTimestampByGMT); // [GMT] 2019-3월-25 19:00:00
+        String strDateFromTimestampByGMT = convertTimeStampToDateStringGMT(timestamp/* [GMT] 2019-03-25 19:00:00 */);
+        System.out.println("[GMT][Timestamp -> String(Date)] " + strDateFromTimestampByGMT); // [GMT] 2019-3월-25 19:00:00
+
+        // [GMT] String -> Date
+        Date dateFromStringByGMT = convertStringToDateGMT(strDateFromTimestampByGMT/* 2019-3월-25 19:00:00 */);
+        System.out.println("[GMT][String(Date) -> Date] " + dateFromStringByGMT ); // [GMT] Tue Mar 26 04:00:00 KST 2019
 
         // Instant
-        printInstant();
+        /* printInstant() */;
     }
 
     // [서버시간기준] Date -> long(mileSecond)
@@ -71,18 +75,25 @@ public class Doc_Timestamp {
         return formatter.format(ts);
     }
 
-    // [GMT] Date -> Date
-    public static String convertDateToDateGMT(Date date) {
+    // [GMT] Date -> String(Date)
+    public static String convertDateToStringGMT(Date date) {
         SimpleDateFormat formatterByGMT = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
         formatterByGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
         return formatterByGMT.format(date);
     }
-    
+
     // [GMT] Timestamp -> Date(String)
-    public static String convertTimeStampToDateGMT(Timestamp ts){
+    public static String convertTimeStampToDateStringGMT(Timestamp ts){
         SimpleDateFormat formatterByGMT = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
         formatterByGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
         return formatterByGMT.format(ts);
+    }
+
+    // [GMT] String -> Date
+    public static Date convertStringToDateGMT(String target) throws Exception {
+        SimpleDateFormat formatterByGMT = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+        formatterByGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return formatterByGMT.parse(target);
     }
 
     // Instant

@@ -2,6 +2,7 @@ package main.stream;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -36,6 +37,18 @@ public class DocStream {
         Stream<String> stream = list.stream();
         stream.forEach(name -> System.out.println(name));
         System.out.println();
+    }
+
+    /**
+     * Stream ( IntStream, Stream<Character> ) 객체 문자열로 부터 만들기
+     *
+     * @date 2019.04.04
+     * @author SDM
+     * @param target - `stream`으로 변환될 문자열
+     */
+    static void streamFromString(String target) {
+        IntStream intStream = target.chars();
+        Stream<Character> characterStream = target.chars().mapToObj(c -> (char)c);
     }
 
     /**
