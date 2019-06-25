@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-/**
- * #Stream 종류
- * - BaseStream
- * - Stream
- * - IntStream
- * - LongStream
- * - DoubleStream
- */
 public class DocStreamType {
 
+    /**
+     * #Stream 종류
+     * - BaseStream
+     * - Stream
+     * - IntStream
+     * - LongStream
+     * - DoubleStream
+     */
     public static final String DIR = System.getProperty("user.dir") + "/src/data/txt/";
 
     public static void main(String[] args) throws IOException {
@@ -47,7 +47,6 @@ public class DocStreamType {
                 new Student("nameB", 13),
                 new Student("nameC", 14)
         );
-
         Stream<Student> stream = students.stream();
         stream.forEach(s -> System.out.println(s.getName()));
         System.out.println();

@@ -2,6 +2,7 @@ package main.string;
 
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  * #String 클래스
@@ -99,23 +100,39 @@ class Doc_String {
         // #trim()
 
         // #valueOf()
-        System.out.println(String.valueOf(10));
+        /*System.out.println(String.valueOf(10));
         System.out.println(String.valueOf(10.5));
-        System.out.println(String.valueOf(true));
+        System.out.println(String.valueOf(true));*/
 
         // #split() - 정규식사용가능
         // String[] result = "str".split("정규표현식");
-
-        String sampleA = "A&B&C&D";
-        String[] arrStrA = sampleA.split("&");
-
+        /*String sampleA = "A&B&C&D";
         String sampleB = "AAA&BBB,CCC,DDD-EEE";
-        String[] arrStrB = str.split("&|,|-"); // & 거나 , 거나 - 로 잘르세여.
+        Doc_String.split(sampleA, "&");
+        Doc_String.split(sampleB, "&|,|-"); // & 거나 , 거나 - 로 잘르세여.
+        Doc_String.split("2.5", "\\."); // & 거나 , 거나 - 로 잘르세여.*/
 
         // == replace ==
-        String myString = "abc";
+        /*String myString = "abc";
         String newMyString = replace(myString);
-        System.out.println(myString + " " + newMyString);
+        System.out.println(myString + " " + newMyString);*/
+
+        // == contains ==
+        /*contains(myString);*/
+
+        // == getBytes ==
+        byte[] bytesA = getBytes("공통<br>계정정보 관리 서브메뉴<br>(실시간)_Dev");
+        System.out.println(bytesA.length);
+    }
+
+    // == split ==
+    public static String[] split(String target, String regex) {
+        String[] result = target.split(regex);
+        System.out.println("=== Split Start ===");
+        System.out.println("target : " + target);
+        System.out.println("regex : " + regex);
+        System.out.println("result : " + Arrays.toString(result));
+        return result;
     }
 
     // == replace - 새로운객체로반환 ==
@@ -126,6 +143,18 @@ class Doc_String {
     // == replaceAll - 정규식을활용 ==
     public static String replaceAll(String target) {
         return target.replaceAll(null/*regex*/, null/*replacement*/);
+    }
+
+    // == contains - 포함여부 ==
+    public static void contains(String target) {
+        System.out.println(target.contains("a"));
+        System.out.println(target.contains("b"));
+        System.out.println(target.contains("ab"));
+    }
+
+    // == getBytes() ==
+    public static byte[] getBytes(String str) {
+        return str.getBytes();
     }
 
 }

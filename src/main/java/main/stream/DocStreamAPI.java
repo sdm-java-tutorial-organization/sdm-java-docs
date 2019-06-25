@@ -5,14 +5,14 @@ import java.util.stream.IntStream;
 
 /**
  * # Stream PipeLine
- * <p>
+ *
  * #리덕션
  * - 대량의 데이터를 가공해서 축소
  * - 필터링/매핑/정렬/그룹핑등 중간과정이 필요
- * <p>
+ *
  * # 스트림 파이브라인
  * - 리덕션을 스트림에서 처리
- * <p>
+ *
  * # API - 중간처리
  * 필터링
  * - distinct() :: 중복제거
@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
  * - sorted()
  * 루핑
  * - peek() :: 중간처리단계에서 전체요소를 푸링하며 추가적인 작업을 하기위해사용
- * <p>
+ *
  * # API - 최종처리
  * 매칭
  * - allMatch() => boolean :: 모든 요소들이 매개값으로 주어진 predicate 조건을 만족하는지
@@ -78,6 +78,7 @@ public class DocStreamAPI {
         orEles();
         ifPresent();
         reduce();
+        reduceString();
     }
 
     /**
@@ -418,6 +419,27 @@ public class DocStreamAPI {
         System.out.println("[총합] " + sumA);
         System.out.println("[총합] " + sumB);
         System.out.println("[총합] " + sumC);
+    }
+
+    /**
+     * <reduce> 이용 스트림 문자열 압축
+     *
+     * @date 2018.09.27
+     * @author SDM
+     * @version 1.0
+     */
+    public static void reduceString() {
+        List<Student> list = Arrays.asList(
+                new Student("nameA", Student.MALE, 30),
+                new Student("nameB", Student.FEMALE, 40),
+                new Student("nameC", Student.MALE, 50)
+        );
+
+        String sumA = list.stream()
+                .map(Student::getName)
+                .reduce((a,b) -> a + "." + b).get();
+
+        System.out.println("[문자열압축] " + sumA);
     }
 
     static class Student implements Comparable<Student> {

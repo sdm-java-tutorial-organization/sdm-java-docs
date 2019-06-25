@@ -12,21 +12,22 @@ import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * #IOCP (Input/Output Completion Port ) 가 무언가요?
- * 입력과 출력의 완료를 담당할 포트를 지정해서 처리하겠다는 의미입니다.
- * 입력과 출력의 완료시점에서 통지는 overlapped(중첩입출력)에서 처리가 되므로
- * 이 기술은 윈도우의 중첩입출력 기술을 확장시킨 것입니다.
- * <p>
- * #IOCP
- * 1. 워커스레드 생성
- * 2. 소켓 생성
- * 3. accept 호출
- * 4. 연결시에 소켓을 CP에 할당
- * 5. WSARecv(:4100)함수를 호출
- */
-
 public class ServarSocketStream {
+
+    /**
+     * #IOCP (Input/Output Completion Port ) 가 무언가요?
+     * 입력과 출력의 완료를 담당할 포트를 지정해서 처리하겠다는 의미입니다.
+     * 입력과 출력의 완료시점에서 통지는 overlapped(중첩입출력)에서 처리가 되므로
+     * 이 기술은 윈도우의 중첩입출력 기술을 확장시킨 것입니다.
+     *
+     * #IOCP
+     * 1. 워커스레드 생성
+     * 2. 소켓 생성
+     * 3. accept 호출
+     * 4. 연결시에 소켓을 CP에 할당
+     * 5. WSARecv(:4100)함수를 호출
+     */
+
     static ServerSocket serverSocket;
     static ExecutorService executorService;
     static List<Client> connections; // 동기화리스트

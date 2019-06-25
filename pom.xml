@@ -8,6 +8,16 @@
     <artifactId>sdm-java-docs</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+            <optional>true</optional>
+        </dependency>
+
+    </dependencies>
 
 </project>

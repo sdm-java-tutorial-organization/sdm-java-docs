@@ -41,19 +41,19 @@ public class Doc_Enum {
     }
 
     // === `Enum` API 정보조회 (매개변수로 `enum`을 받을 수 없음) ===
-    public static void printEnumAPIInfo(MyEnum MyEnum) {
+    public static void printEnumAPIInfo() {
         System.out.println("[MyEnum.values()[0]] " + MyEnum.values()[0]);
         System.out.println("[MyEnum.valueOf(\"A\")] " + MyEnum.valueOf("A"));
     }
 
     // === 단건 `Enum` 정보조회 ===
-    public static void printEnumInfo(MyEnum MyEnum) {
-        System.out.println("[MyEnum.A] " + MyEnum);
-        System.out.println("[MyEnum.A.ordinal()] " + MyEnum.ordinal());
-        System.out.println("[MyEnum.A.name()] " + MyEnum.name());
-        System.out.println("[MyEnum.A.toString()] " + MyEnum.toString());
-        System.out.println("[MyEnum.A.getMessage()] " + MyEnum.getMessage());
-        System.out.println("[MyEnum.A.isEnable()] " + MyEnum.isEnable());
+    public static void printEnumInfo(MyEnum myEnum) {
+        System.out.println("[MyEnum.A] " + myEnum);
+        System.out.println("[MyEnum.A.ordinal()] " + myEnum.ordinal());
+        System.out.println("[MyEnum.A.name()] " + myEnum.name());
+        System.out.println("[MyEnum.A.toString()] " + myEnum.toString());
+        System.out.println("[MyEnum.A.getMessage()] " + myEnum.getMessage());
+        System.out.println("[MyEnum.A.isEnable()] " + myEnum.isEnable());
     }
 
     public String getMessage(MyEnum message) {
